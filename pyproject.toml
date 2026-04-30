@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ask-wikidata"
+version = "0.1.0"
+description = "Minimal Docker-friendly CLI scaffold (uv + Typer)."
+requires-python = ">=3.11"
+dependencies = [
+    "typer>=0.12.0",
+    "rich>=13.9.0",
+    "pydantic>=2.10.0",
+    "httpx>=0.28.0",
+    "tenacity>=9.0.0",
+    "python-dotenv>=1.0.0",
+    "langgraph>=0.2.0",
+    "langchain-core>=0.3.0",
+    "langchain-openai>=0.2.0",
+    "langchain-google-genai>=2.0.0",
+    "langchain-ollama>=0.2.0",
+    "ollama>=0.4.0",
+    "pandas>=2.2.0",
+    "SPARQLWrapper>=2.0.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-cov>=5.0.0",
+]
+
+[project.scripts]
+ask-wikidata = "ask_wikidata.main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["ask_wikidata"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+markers = [
+    "integration: live HTTP tests (Wikidata); set RUN_WIKIDATA_LIVE=1 to run",
+]
