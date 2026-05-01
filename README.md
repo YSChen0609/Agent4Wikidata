@@ -30,8 +30,8 @@ docker run --rm ask-wikidata:latest version
 ```
 
 For further troubleshooting, please refer to:
-- `OLLAMA_DOCKER_FIRST.md`
-- `DOCKER_WORKFLOW.md`
+- `docs/OLLAMA_DOCKER_FIRST.md`
+- `docs/DOCKER_WORKFLOW.md`
 
 ## Architecture
 The NL → SPARQL pipeline is a LangGraph state machine (`ask_wikidata/sparql_query_graph.py`) running a **ReAct-like loop**: the agent reasons about the question, optionally calls Wikidata lookup tools to resolve names to IDs, then generates the final SPARQL query once it has enough context.

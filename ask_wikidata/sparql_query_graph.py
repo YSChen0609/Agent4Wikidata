@@ -112,7 +112,8 @@ def run_nl_query(
 
 
 if __name__ == "__main__":
-    response = run_nl_query("What is the capital of France?")
+    response = run_nl_query("What is the capital?")
     print(response.get("query_results", {}))
     print(response.get("query_sparql", ""))
+    # print(response.get("messages", []))
 

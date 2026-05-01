@@ -1,0 +1,521 @@
+{
+  "meta": {
+    "run_at": "2026-05-01T07:43:58.798988+00:00",
+    "provider": "env default",
+    "model": "env default",
+    "summary": {
+      "total": 27,
+      "ok": 12,
+      "no_sparql": 14,
+      "errors": 1
+    }
+  },
+  "results": [
+    {
+      "index": 1,
+      "category": "AMBIGUOUS",
+      "query": "Who is the president?",
+      "note": "No country or time frame specified.",
+      "sparql": "",
+      "results": {
+        "error": "MISSING_QUERY_SPARQL"
+      },
+      "error": null,
+      "elapsed_ms": 3649
+    },
+    {
+      "index": 2,
+      "category": "AMBIGUOUS",
+      "query": "What is the capital?",
+      "note": "No country specified at all.",
+      "sparql": "",
+      "results": {
+        "error": "MISSING_QUERY_SPARQL"
+      },
+      "error": null,
+      "elapsed_ms": 2319
+    },
+    {
+      "index": 3,
+      "category": "AMBIGUOUS",
+      "query": "When did he die?",
+      "note": "Pronoun without any prior context.",
+      "sparql": "",
+      "results": {
+        "error": "MISSING_QUERY_SPARQL"
+      },
+      "error": null,
+      "elapsed_ms": 2265
+    },
+    {
+      "index": 4,
+      "category": "AMBIGUOUS",
+      "query": "What is the population of the city?",
+      "note": "No city identified.",
+      "sparql": "",
+      "results": {
+        "error": "MISSING_QUERY_SPARQL"
+      },
+      "error": null,
+      "elapsed_ms": 2476
+    },
+    {
+      "index": 5,
+      "category": "AMBIGUOUS",
+      "query": "Who wrote the book?",
+      "note": "No title or author context.",
+      "sparql": "",
+      "results": {
+        "error": "MISSING_QUERY_SPARQL"
+      },
+      "error": null,
+      "elapsed_ms": 2188
+    },
+    {
+      "index": 6,
+      "category": "AMBIGUOUS",
+      "query": "What is the area of the country?",
+      "note": "'the country' is unresolvable without context.",
+      "sparql": "",
+      "results": {
+        "error": "MISSING_QUERY_SPARQL"
+      },
+      "error": null,
+      "elapsed_ms": 2284
+    },
+    {
+      "index": 7,
+      "category": "AMBIGUOUS",
+      "query": "List all rivers.",
+      "note": "Unbounded query – could return millions of results.",
+      "sparql": "",
+      "results": {
+        "error": "MISSING_QUERY_SPARQL"
+      },
+      "error": null,
+      "elapsed_ms": 2171
+    },
+    {
+      "index": 8,
+      "category": "AMBIGUOUS",
+      "query": "What is Mercury?",
+      "note": "Mercury can refer to the planet, the element, or the Roman god.",
+      "sparql": "SELECT ?mercuryLabel WHERE {\n  wd:Q218 wdt:P31 ?mercury .\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }\n}\nLIMIT 10",
+      "results": {
+        "head": {
+          "vars": [
+            "mercuryLabel"
+          ]
+        },
+        "results": {
+          "bindings": [
+            {
+              "mercuryLabel": {
+                "xml:lang": "en",
+                "type": "literal",
+                "value": "country"
+              }
+            },
+            {
+              "mercuryLabel": {
+                "xml:lang": "en",
+                "type": "literal",
+                "value": "sovereign state"
+              }
+            }
+          ]
+        }
+      },
+      "error": null,
+      "elapsed_ms": 9061
+    },
+    {
+      "index": 9,
+      "category": "CONFLICTING",
+      "query": "Who is the oldest living person born after 2010?",
+      "note": "'Oldest living' + 'born after 2010' is unlikely to be meaningful.",
+      "sparql": "SELECT ?person ?personLabel WHERE {\n  wd:Q347689 wdt:P569 ?birthdate .\n  FILTER(?birthdate > \"2010-01-01\"^^xsd:date).\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }\n}\nORDER BY DESC(?birthdate)\nLIMIT 1",
+      "results": {
+        "head": {
+          "vars": [
+            "person",
+            "personLabel"
+          ]
+        },
+        "results": {
+          "bindings": []
+        }
+      },
+      "error": null,
+      "elapsed_ms": 14590
+    },
+    {
+      "index": 10,
+      "category": "CONFLICTING",
+      "query": "What country is both an island and landlocked?",
+      "note": "Islands cannot be landlocked – mutually exclusive properties.",
+      "sparql": "",
+      "results": {
+        "error": "MISSING_QUERY_SPARQL"
+      },
+      "error": null,
+      "elapsed_ms": 2417
+    },
+    {
+      "index": 11,
+      "category": "CONFLICTING",
+      "query": "Find all people who died before they were born.",
+      "note": "Death date < birth date is logically impossible.",
+      "sparql": "",
+      "results": {
+        "error": "MISSING_QUERY_SPARQL"
+      },
+      "error": null,
+      "elapsed_ms": 2466
+    },
+    {
+      "index": 12,
+      "category": "CONFLICTING",
+      "query": "Which city has zero population but is still inhabited?",
+      "note": "Contradictory properties: zero population vs. inhabited.",
+      "sparql": "",
+      "results": {
+        "error": "MISSING_QUERY_SPARQL"
+      },
+      "error": null,
+      "elapsed_ms": 2540
+    },
+    {
+      "index": 13,
+      "category": "CONFLICTING",
+      "query": "Show me the tallest mountain that is below sea level.",
+      "note": "Tallest mountain cannot simultaneously be below sea level.",
+      "sparql": "SELECT ?mountain ?mountainLabel WHERE {\n  wd:Q1025 wdt:P31/wdt:P279* ?mountain .\n  FILTER(?mountain < wd:Q468)\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }\n}\nORDER BY DESC(?mountain)\nLIMIT 1",
+      "results": {
+        "head": {
+          "vars": [
+            "mountain",
+            "mountainLabel"
+          ]
+        },
+        "results": {
+          "bindings": []
+        }
+      },
+      "error": null,
+      "elapsed_ms": 14685
+    },
+    {
+      "index": 14,
+      "category": "CONFLICTING",
+      "query": "What are all languages that are both extinct and currently spoken?",
+      "note": "Extinct and currently-spoken are mutually exclusive.",
+      "sparql": "",
+      "results": {
+        "error": "MISSING_QUERY_SPARQL"
+      },
+      "error": null,
+      "elapsed_ms": 2644
+    },
+    {
+      "index": 15,
+      "category": "TYPO",
+      "query": "What is the captial of Frnace?",
+      "note": "'captial' and 'Frnace' are misspelled.",
+      "sparql": "SELECT ?capital ?capitalLabel WHERE {\n  wd:Q142 wdt:P36 ?capital .\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }\n}\nLIMIT 10",
+      "results": {
+        "head": {
+          "vars": [
+            "capital",
+            "capitalLabel"
+          ]
+        },
+        "results": {
+          "bindings": [
+            {
+              "capital": {
+                "type": "uri",
+                "value": "http://www.wikidata.org/entity/Q90"
+              },
+              "capitalLabel": {
+                "xml:lang": "en",
+                "type": "literal",
+                "value": "Paris"
+              }
+            }
+          ]
+        }
+      },
+      "error": null,
+      "elapsed_ms": 16319
+    },
+    {
+      "index": 16,
+      "category": "TYPO",
+      "query": "Who founed Micosoft?",
+      "note": "'founed' and 'Micosoft' are misspelled.",
+      "sparql": "",
+      "results": {
+        "error": "MISSING_QUERY_SPARQL"
+      },
+      "error": null,
+      "elapsed_ms": 2352
+    },
+    {
+      "index": 17,
+      "category": "TYPO",
+      "query": "Waht is the popullation of Brazel?",
+      "note": "Multiple misspellings throughout.",
+      "sparql": "",
+      "results": {
+        "error": "MISSING_QUERY_SPARQL"
+      },
+      "error": null,
+      "elapsed_ms": 2461
+    },
+    {
+      "index": 18,
+      "category": "TYPO",
+      "query": "When was Alber Einsten bron?",
+      "note": "'Alber Einsten' and 'bron' are misspelled.",
+      "sparql": "SELECT ?birthDate WHERE {\n  wd:Q42 wdt:P569 ?birthDate .\n}",
+      "results": {
+        "head": {
+          "vars": [
+            "birthDate"
+          ]
+        },
+        "results": {
+          "bindings": [
+            {
+              "birthDate": {
+                "datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+                "type": "literal",
+                "value": "1952-03-11T00:00:00Z"
+              }
+            }
+          ]
+        }
+      },
+      "error": null,
+      "elapsed_ms": 11705
+    },
+    {
+      "index": 19,
+      "category": "TYPO",
+      "query": "Whcih counrty won the most Olypmic golds?",
+      "note": "Multiple typos – 'Whcih', 'counrty', 'Olypmic'.",
+      "sparql": "",
+      "results": {},
+      "error": "QueryBadFormed: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb'SPARQL-QUERY: queryStr=SELECT ?country ?countryLabel (COUNT(?gold) AS ?goldCount) WHERE {\\n  wd:Q216038 wdt:P527 ?event .\\n  ?event wdt:P918 ?athlete ;\\n          wdt:P625 ?location .\\n  ?athlete wdt:P27 ?country ;\\n            wdt:P16 ?gender .\\n  FILTER(?gender = wd:Q248)\\n  OPTIONAL {\\n    ?athlete wdt:P31/wdt:P279* wd:Q329.\\n    BIND(wd:Q329 AS ?gold)\\n  }\\n} GROUP BY ?country ORDER BY DESC(?goldCount) LIMIT 1\\nSERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }\\njava.util.concurrent.ExecutionException: org.openrdf.query.MalformedQueryException: Encountered \" \"service\" \"SERVICE \"\" at line 13, column 1.\\nWas expecting one of:\\n    <EOF> \\n    \"offset\" ...\\n    \"bindings\" ...\\n    \"values\" ...\\n    \\n\\tat java.util.concurrent.FutureTask.report(FutureTask.java:122)\\n\\tat java.util.concurrent.FutureTask.get(FutureTask.java:206)\\n\\tat com.bigdata.rdf.sail.webapp.BigdataServlet.submitApiTask(BigdataServlet.java:292)\\n\\tat com.bigdata.rdf.sail.webapp.QueryServlet.doSparqlQuery(QueryServlet.java:678)\\n\\tat com.bigdata.rdf.sail.webapp.QueryServlet.doGet(QueryServlet.java:290)\\n\\tat com.bigdata.rdf.sail.webapp.RESTServlet.doGet(RESTServlet.java:240)\\n\\tat com.bigdata.rdf.sail.webapp.MultiTenancyServlet.doGet(MultiTenancyServlet.java:273)\\n\\tat javax.servlet.http.HttpServlet.service(HttpServlet.java:687)\\n\\tat javax.servlet.http.HttpServlet.service(HttpServlet.java:790)\\n\\tat org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:865)\\n\\tat org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1655)\\n\\tat org.wikidata.query.rdf.blazegraph.throttling.ThrottlingFilter.doFilter(ThrottlingFilter.java:322)\\n\\tat org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1642)\\n\\tat org.wikidata.query.rdf.blazegraph.throttling.SystemOverloadFilter.doFilter(SystemOverloadFilter.java:84)\\n\\tat org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1642)\\n\\tat ch.qos.logback.classic.helpers.MDCInsertingServletFilter.doFilter(MDCInsertingServletFilter.java:50)\\n\\tat org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1642)\\n\\tat org.wikidata.query.rdf.blazegraph.filters.QueryEventSenderFilter.doFilter(QueryEventSenderFilter.java:125)\\n\\tat org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1642)\\n\\tat org.wikidata.query.rdf.blazegraph.filters.ClientIPFilter.doFilter(ClientIPFilter.java:43)\\n\\tat org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1642)\\n\\tat org.wikidata.query.rdf.blazegraph.filters.JWTIdentityFilter.doFilter(JWTIdentityFilter.java:66)\\n\\tat org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1642)\\n\\tat org.wikidata.query.rdf.blazegraph.filters.RealAgentFilter.doFilter(RealAgentFilter.java:33)\\n\\tat org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1642)\\n\\tat org.wikidata.query.rdf.blazegraph.filters.RequestConcurrencyFilter.doFilter(RequestConcurrencyFilter.java:50)\\n\\tat org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1634)\\n\\tat org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:533)\\n\\tat org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:146)\\n\\tat org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:548)\\n\\tat org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:132)\\n\\tat org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:257)\\n\\tat org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:1595)\\n\\tat org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:255)\\n\\tat org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1340)\\n\\tat org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:203)\\n\\tat org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:473)\\n\\tat org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:1564)\\n\\tat org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:201)\\n\\tat org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1242)\\n\\tat org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:144)\\n\\tat org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:220)\\n\\tat org.eclipse.jetty.server.handler.HandlerCollection.handle(HandlerCollection.java:126)\\n\\tat org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:132)\\n\\tat org.eclipse.jetty.server.Server.handle(Server.java:503)\\n\\tat org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:364)\\n\\tat org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:260)\\n\\tat org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:305)\\n\\tat org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:103)\\n\\tat org.eclipse.jetty.io.ChannelEndPoint$2.run(ChannelEndPoint.java:118)\\n\\tat org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.runTask(EatWhatYouKill.java:333)\\n\\tat org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.doProduce(EatWhatYouKill.java:310)\\n\\tat org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.tryProduce(EatWhatYouKill.java:168)\\n\\tat org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.run(EatWhatYouKill.java:126)\\n\\tat org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.run(ReservedThreadExecutor.java:366)\\n\\tat org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:765)\\n\\tat org.eclipse.jetty.util.thread.QueuedThreadPool$2.run(QueuedThreadPool.java:683)\\n\\tat java.lang.Thread.run(Thread.java:750)\\nCaused by: org.openrdf.query.MalformedQueryException: Encountered \" \"service\" \"SERVICE \"\" at line 13, column 1.\\nWas expecting one of:\\n    <EOF> \\n    \"offset\" ...\\n    \"bindings\" ...\\n    \"values\" ...\\n    \\n\\tat com.bigdata.rdf.sail.sparql.Bigdata2ASTSPARQLParser.parseQuery2(Bigdata2ASTSPARQLParser.java:400)\\n\\tat com.bigdata.rdf.sail.webapp.QueryServlet$SparqlQueryTask.call(QueryServlet.java:741)\\n\\tat com.bigdata.rdf.sail.webapp.QueryServlet$SparqlQueryTask.call(QueryServlet.java:695)\\n\\tat com.bigdata.rdf.task.ApiTaskForIndexManager.call(ApiTaskForIndexManager.java:68)\\n\\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\\n\\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)\\n\\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)\\n\\t... 1 more\\nCaused by: com.bigdata.rdf.sail.sparql.ast.ParseException: Encountered \" \"service\" \"SERVICE \"\" at line 13, column 1.\\nWas expecting one of:\\n    <EOF> \\n    \"offset\" ...\\n    \"bindings\" ...\\n    \"values\" ...\\n    \\n\\tat com.bigdata.rdf.sail.sparql.ast.SyntaxTreeBuilder.generateParseException(SyntaxTreeBuilder.java:9722)\\n\\tat com.bigdata.rdf.sail.sparql.ast.SyntaxTreeBuilder.jj_consume_token(SyntaxTreeBuilder.java:9589)\\n\\tat com.bigdata.rdf.sail.sparql.ast.SyntaxTreeBuilder.QueryContainer(SyntaxTreeBuilder.java:217)\\n\\tat com.bigdata.rdf.sail.sparql.ast.SyntaxTreeBuilder.parseQuery(SyntaxTreeBuilder.java:32)\\n\\tat com.bigdata.rdf.sail.sparql.Bigdata2ASTSPARQLParser.parseQuery2(Bigdata2ASTSPARQLParser.java:336)\\n\\t... 7 more\\n'",
+      "elapsed_ms": 29241
+    },
+    {
+      "index": 20,
+      "category": "TYPO",
+      "query": "How meny plaents are in the Solr Systm?",
+      "note": "'meny', 'plaents', 'Solr Systm' are all misspelled.",
+      "sparql": "",
+      "results": {
+        "error": "MISSING_QUERY_SPARQL"
+      },
+      "error": null,
+      "elapsed_ms": 2740
+    },
+    {
+      "index": 21,
+      "category": "NON_ENGLISH",
+      "query": "Quelle est la capitale de la France?",
+      "note": "French: 'What is the capital of France?'",
+      "sparql": "SELECT ?capital ?capitalLabel WHERE {\n  wd:Q142 wdt:P36 ?capital .\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }\n}\nLIMIT 10",
+      "results": {
+        "head": {
+          "vars": [
+            "capital",
+            "capitalLabel"
+          ]
+        },
+        "results": {
+          "bindings": [
+            {
+              "capital": {
+                "type": "uri",
+                "value": "http://www.wikidata.org/entity/Q90"
+              },
+              "capitalLabel": {
+                "xml:lang": "en",
+                "type": "literal",
+                "value": "Paris"
+              }
+            }
+          ]
+        }
+      },
+      "error": null,
+      "elapsed_ms": 9357
+    },
+    {
+      "index": 22,
+      "category": "NON_ENGLISH",
+      "query": "¿Cuál es la población de México?",
+      "note": "Spanish: 'What is the population of Mexico?'",
+      "sparql": "SELECT ?population WHERE {\n  wd:Q142 wdt:P1082 ?population .\n}\nORDER BY DESC(?population)\nLIMIT 1",
+      "results": {
+        "head": {
+          "vars": [
+            "population"
+          ]
+        },
+        "results": {
+          "bindings": [
+            {
+              "population": {
+                "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+                "type": "literal",
+                "value": "68605616"
+              }
+            }
+          ]
+        }
+      },
+      "error": null,
+      "elapsed_ms": 6823
+    },
+    {
+      "index": 23,
+      "category": "NON_ENGLISH",
+      "query": "Was ist die Hauptstadt von Deutschland?",
+      "note": "German: 'What is the capital of Germany?'",
+      "sparql": "SELECT ?capital ?capitalLabel WHERE {\n  wd:Q183 wdt:P36 ?capital .\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }\n}\nLIMIT 10",
+      "results": {
+        "head": {
+          "vars": [
+            "capital",
+            "capitalLabel"
+          ]
+        },
+        "results": {
+          "bindings": [
+            {
+              "capital": {
+                "type": "uri",
+                "value": "http://www.wikidata.org/entity/Q64"
+              },
+              "capitalLabel": {
+                "xml:lang": "en",
+                "type": "literal",
+                "value": "Berlin"
+              }
+            }
+          ]
+        }
+      },
+      "error": null,
+      "elapsed_ms": 9582
+    },
+    {
+      "index": 24,
+      "category": "NON_ENGLISH",
+      "query": "日本の首相は誰ですか？",
+      "note": "Japanese: 'Who is the Prime Minister of Japan?'",
+      "sparql": "SELECT ?primeMinister ?primeMinisterLabel WHERE {\n  wd:Q17 wdt:P6 ?primeMinister .\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }\n}\nLIMIT 10",
+      "results": {
+        "head": {
+          "vars": [
+            "primeMinister",
+            "primeMinisterLabel"
+          ]
+        },
+        "results": {
+          "bindings": [
+            {
+              "primeMinister": {
+                "type": "uri",
+                "value": "http://www.wikidata.org/entity/Q1705028"
+              },
+              "primeMinisterLabel": {
+                "xml:lang": "en",
+                "type": "literal",
+                "value": "Sanae Takaichi"
+              }
+            }
+          ]
+        }
+      },
+      "error": null,
+      "elapsed_ms": 10240
+    },
+    {
+      "index": 25,
+      "category": "NON_ENGLISH",
+      "query": "من هو مؤسس شركة أبل؟",
+      "note": "Arabic: 'Who is the founder of Apple Inc.?'",
+      "sparql": "SELECT ?founder ?founderLabel WHERE {\n  wd:Q142 wdt:P735 ?founder .\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }\n}\nLIMIT 1",
+      "results": {
+        "head": {
+          "vars": [
+            "founder",
+            "founderLabel"
+          ]
+        },
+        "results": {
+          "bindings": []
+        }
+      },
+      "error": null,
+      "elapsed_ms": 16721
+    },
+    {
+      "index": 26,
+      "category": "NON_ENGLISH",
+      "query": "Кто написал Войну и мир?",
+      "note": "Russian: 'Who wrote War and Peace?'",
+      "sparql": "SELECT ?author ?authorLabel WHERE {\n  wd:Q2048 wdt:P50 ?author .\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }\n}\nLIMIT 1",
+      "results": {
+        "head": {
+          "vars": [
+            "author",
+            "authorLabel"
+          ]
+        },
+        "results": {
+          "bindings": []
+        }
+      },
+      "error": null,
+      "elapsed_ms": 16613
+    },
+    {
+      "index": 27,
+      "category": "NON_ENGLISH",
+      "query": "중국의 수도는 어디입니까?",
+      "note": "Korean: 'What is the capital of China?'",
+      "sparql": "SELECT ?capital ?capitalLabel WHERE {\n  wd:Q148 wdt:P36 ?capital .\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }\n}\nLIMIT 1",
+      "results": {
+        "head": {
+          "vars": [
+            "capital",
+            "capitalLabel"
+          ]
+        },
+        "results": {
+          "bindings": [
+            {
+              "capital": {
+                "type": "uri",
+                "value": "http://www.wikidata.org/entity/Q956"
+              },
+              "capitalLabel": {
+                "xml:lang": "en",
+                "type": "literal",
+                "value": "Beijing"
+              }
+            }
+          ]
+        }
+      },
+      "error": null,
+      "elapsed_ms": 15791
+    }
+  ]
+}
